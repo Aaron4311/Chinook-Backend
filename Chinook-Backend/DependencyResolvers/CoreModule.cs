@@ -4,6 +4,7 @@ using Chinook_Backend.Utilities.IoC;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace Chinook_Backend.DependencyResolvers
 		{
 			collection.AddMemoryCache();
 			collection.AddSingleton<ICacheManager, MemoryCacheManager>();
+			collection.AddSingleton<Stopwatch>();
 		}
 	}
 }

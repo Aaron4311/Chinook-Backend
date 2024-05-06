@@ -9,10 +9,10 @@ namespace Chinook_Backend.Utilities.Interceptors
 {
 	public class MethodInterception : MethodInterceptionBaseAttribute
 	{
-		public void OnBefore(IInvocation invocation) { }
-		public void OnAfter(IInvocation invocation) { }
-		public void OnSuccess(IInvocation invocation) { }
-		public void OnException(IInvocation invocation,Exception e) { }
+		public virtual void OnBefore(IInvocation invocation) { }
+		public virtual void OnAfter(IInvocation invocation) { }
+		public virtual void OnSuccess(IInvocation invocation) { }
+		public virtual void OnException(IInvocation invocation,Exception e) { }
 		public override void Intercept(IInvocation invocation)
 		{
 			var isSuccess = true;
