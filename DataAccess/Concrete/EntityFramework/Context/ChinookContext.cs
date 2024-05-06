@@ -1,4 +1,5 @@
-﻿using Entity.Concrete;
+﻿using Chinook_Backend.Entities.Concrete;
+using Entity.Concrete;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,11 @@ namespace DataAccess.Concrete.EntityFramework.Context
 		public DbSet<Playlist> Playlists { get; set; }
 		public DbSet<PlaylistTrack> PlaylistTracks { get; set; }
 		public DbSet<Track> Tracks { get; set; }
-	
+		public DbSet<User> Users { get; set; }
+		public DbSet<OperationClaim> OperationClaims { get; set; }
+		public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
+
+
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
