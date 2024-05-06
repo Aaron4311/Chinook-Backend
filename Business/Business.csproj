@@ -11,4 +11,8 @@
     <ProjectReference Include="..\Entity\Entity.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Autofac.Extras.DynamicProxy" Version="7.1.0" />
+  </ItemGroup>
+
 </Project>
