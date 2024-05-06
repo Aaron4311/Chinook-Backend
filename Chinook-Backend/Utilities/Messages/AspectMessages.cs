@@ -8,7 +8,7 @@ namespace Chinook_Backend.Utilities.Messages
 {
 	public class AspectMessages
 	{
-		internal static string? WrongLoggerType;
-		internal static string? WrongLogger;
+		public static string WrongLoggerType = "Wrong Logger Type" ;
+		public static string WrongLogger = "Wrong Logger";
 	}
 }
