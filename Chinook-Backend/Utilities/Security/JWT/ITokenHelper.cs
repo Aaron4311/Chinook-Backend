@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Chinook_Backend.Entities.Concrete;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace Chinook_Backend.Utilities.Security.JWT
 {
-	internal class ITokenHelper
+	public interface ITokenHelper
 	{
+		AccessToken CreateToken(User user, List<OperationClaim> operationClaims);
 	}
 }

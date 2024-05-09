@@ -46,4 +46,5 @@ namespace Chinook_Backend.Aspects.Exception
 			};
 			return logDetailWithException;
 		}
+	}
 }
