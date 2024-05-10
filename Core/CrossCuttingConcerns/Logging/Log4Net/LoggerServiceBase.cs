@@ -19,7 +19,7 @@ namespace Chinook_Backend.CrossCuttingConcerns.Logging.Log4Net
 		public LoggerServiceBase(string name)
 		{
 			XmlDocument xmlDocument = new XmlDocument();
-			xmlDocument.Load(File.OpenRead(""));
+			xmlDocument.Load(File.OpenRead("C:\\Users\\Harun\\source\\repos\\Chinook-Backend\\WebAPI\\log4net.config"));
 
 			ILoggerRepository loggerRepository = LogManager.CreateRepository(Assembly.GetEntryAssembly(), typeof(Hierarchy));
 			XmlConfigurator.Configure(loggerRepository, xmlDocument["log4net"]);
