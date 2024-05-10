@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.ValidationRules.FluentValidation;
 using Chinook_Backend.Aspects.Validation;
 using Chinook_Backend.Utilities.Results;
@@ -23,12 +24,14 @@ namespace Business.Concrete
 		}
 
 		[ValidationAspect(typeof(InvoiceLineValidator))]
+		[SecuredOperation("admin,editor")]
 		public IResult Add(InvoiceLine invoice)
 		{
 			_invoiceLineDal.Add(invoice);
 			return new SuccessResult();
 		}
 
+		[SecuredOperation("admin")]
 		public IResult Delete(int id)
 		{
 			var deletedInvoiceLine = _invoiceLineDal.Get(x => x.InvoiceLineId == id);
@@ -36,17 +39,20 @@ namespace Business.Concrete
 			return new SuccessResult();
 		}
 
+		[SecuredOperation("admin,editor,user")]
 		public IDataResult<InvoiceLine> Get(int id)
 		{
 			return new SuccessDataResult<InvoiceLine>(_invoiceLineDal.Get(x => x.InvoiceLineId == id));
 		}
 
+		[SecuredOperation("admin,editor")]
 		public IDataResult<List<InvoiceLine>> GetAll()
 		{
 			return new SuccessDataResult<List<InvoiceLine>>(_invoiceLineDal.GetAll());
 
 		}
 
+		[SecuredOperation("admin")]
 		public IResult Update(InvoiceLine invoice)
 		{
 			_invoiceLineDal.Update(invoice);

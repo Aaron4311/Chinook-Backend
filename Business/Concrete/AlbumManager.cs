@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.BusinessAspects.Autofac;
 using Business.ValidationRules.FluentValidation;
+using Chinook_Backend.Aspects.Caching;
 using Chinook_Backend.Aspects.Validation;
 using Chinook_Backend.Utilities.Results;
 using DataAccess.Abstract;
@@ -18,6 +19,7 @@ namespace Business.Concrete
 			_albumDal = albumDal;
 		}
 
+		[CacheRemovingAspect("IAlbumService.Get")]
 		[ValidationAspect(typeof(AlbumValidator))]
 		public IResult Add(Album album)
 		{
@@ -25,6 +27,7 @@ namespace Business.Concrete
 			return new SuccessResult();
 		}
 
+		[SecuredOperation("admin")]
 		public IResult Delete(int id)
 		{
 			var deletedAlbum = _albumDal.Get(x => x.AlbumId == id);
@@ -32,17 +35,20 @@ namespace Business.Concrete
 			return new SuccessResult();
 		}
 
+		[SecuredOperation("admin,editor,user")]
 		public IDataResult<Album> Get(int id)
 		{
 			return new SuccessDataResult<Album>(_albumDal.Get(x => x.AlbumId == id));
 		}
 
-		[SecuredOperation("admin")]
+		[SecuredOperation("admin,editor,user")]
 		public IDataResult<List<AlbumDetailsDto>> GetAlbumDetails()
 		{
 			return new SuccessDataResult<List<AlbumDetailsDto>>(_albumDal.GetAlbumDetails());
 		}
 
+
+		[SecuredOperation("admin,editor")]
 		public IDataResult<List<Album>> GetAll()
 		{
 			return new SuccessDataResult<List<Album>>(_albumDal.GetAll());
@@ -50,6 +56,7 @@ namespace Business.Concrete
 		}
 
 		[ValidationAspect(typeof(AlbumValidator))]
+		[SecuredOperation("admin")]
 		public IResult Update(Album album)
 		{
 			_albumDal.Update(album);

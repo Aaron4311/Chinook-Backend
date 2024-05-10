@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.ValidationRules.FluentValidation;
 using Chinook_Backend.Aspects.Validation;
 using Chinook_Backend.Utilities.Results;
@@ -22,12 +23,14 @@ namespace Business.Concrete
 			_genreDal = genreDal;
 		}
 		[ValidationAspect(typeof(GenreValidator))]
+		[SecuredOperation("admin,editor")]
 		public IResult Add(Genre genre)
 		{
 			_genreDal.Add(genre);
 			return new SuccessResult();
 		}
 
+		[SecuredOperation("admin")]
 		public IResult Delete(int id)
 		{
 			var deletedGenre = _genreDal.Get(x => x.GenreId == id);
@@ -35,11 +38,13 @@ namespace Business.Concrete
 			return new SuccessResult();
 		}
 
+		[SecuredOperation("admin,editor,user")]
 		public IDataResult<Genre> Get(int id)
 		{
 			return new SuccessDataResult<Genre>(_genreDal.Get(x => x.GenreId == id));
 		}
 
+		[SecuredOperation("admin,editor")]
 		public IDataResult<List<Genre>> GetAll()
 		{
 			return new SuccessDataResult<List<Genre>>(_genreDal.GetAll());
@@ -47,6 +52,7 @@ namespace Business.Concrete
 		}
 		
 		[ValidationAspect(typeof(GenreValidator))]
+		[SecuredOperation("admin")]
 		public IResult Update(Genre genre)
 		{
 			_genreDal.Update(genre);

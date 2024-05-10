@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.ValidationRules.FluentValidation;
 using Chinook_Backend.Aspects.Validation;
 using Chinook_Backend.Utilities.Results;
@@ -22,12 +23,14 @@ namespace Business.Concrete
 			_playlistTrackDal = playlistTrackDal;
 		}
 		[ValidationAspect(typeof(PlaylistTrackManager))]
+		[SecuredOperation("admin,editor")]
 		public IResult Add(PlaylistTrack playlistTrack)
 		{
 			_playlistTrackDal.Add(playlistTrack );
 			return new SuccessResult();
 		}
 
+		[SecuredOperation("admin")]
 		public IResult Delete(int id)
 		{
 			var deletedTrack = _playlistTrackDal.Get(x => x.TrackId == id);
@@ -35,11 +38,13 @@ namespace Business.Concrete
 			return new SuccessResult();
 		}
 
+		[SecuredOperation("admin,editor,user")]
 		public IDataResult<PlaylistTrack > Get(int id)
 		{
 			return new SuccessDataResult<PlaylistTrack >(_playlistTrackDal.Get(x => x.TrackId == id));
 		}
 
+		[SecuredOperation("admin,editor")]
 		public IDataResult<List<PlaylistTrack >> GetAll()
 		{
 			return new SuccessDataResult<List<PlaylistTrack >>(_playlistTrackDal.GetAll());
@@ -47,6 +52,7 @@ namespace Business.Concrete
 		}
 
 		[ValidationAspect(typeof(PlaylistTrackManager))]
+		[SecuredOperation("admin")]
 		public IResult Update(PlaylistTrack playlistTrack)
 		{
 			_playlistTrackDal.Update(playlistTrack);

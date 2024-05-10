@@ -1,4 +1,8 @@
 ﻿using Castle.DynamicProxy;
+using Chinook_Backend.Aspects.Exception;
+using Chinook_Backend.Aspects.Logging;
+using Chinook_Backend.Aspects.Performance;
+using Chinook_Backend.CrossCuttingConcerns.Logging.Log4Net.Loggers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +19,9 @@ namespace Chinook_Backend.Utilities.Interceptors
 			var classAttributes = type.GetCustomAttributes<MethodInterceptionBaseAttribute>(true).ToList();
 			var methodAttributes = type.GetMethod(method.Name).GetCustomAttributes<MethodInterceptionBaseAttribute>(true);
 			classAttributes.AddRange(methodAttributes);
+			classAttributes.Add(new PerformanceAspect(3));
+			classAttributes.Add(new ExceptionAspect(typeof(FileLogger)));
+			classAttributes.Add(new LoggingAspect(typeof(FileLogger)));
 
 			return classAttributes.OrderBy(x => x.Priority).ToArray();
 		}

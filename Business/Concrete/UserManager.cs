@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Chinook_Backend.Aspects.Validation;
 using Chinook_Backend.Entities.Concrete;
@@ -23,6 +24,7 @@ namespace Business.Concrete
 		}
 
 		[ValidationAspect(typeof(UserValidator))]
+		[SecuredOperation("admin")]
 		public IResult Add(User user)
 		{
 			_userDal.Add(user);

@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.ValidationRules.FluentValidation;
 using Chinook_Backend.Aspects.Validation;
 using Chinook_Backend.Utilities.Results;
@@ -22,12 +23,14 @@ namespace Business.Concrete
 			_artistDal = artistDal;
 		}
 		[ValidationAspect(typeof(ArtistValidator))]
+		[SecuredOperation("admin,editor")]
 		public IResult Add(Artist artist)
 		{
 			_artistDal.Add(artist);
 			return new SuccessResult();
 		}
 
+		[SecuredOperation("admin")]
 		public IResult Delete(int id)
 		{
 			var deletedArtist = _artistDal.Get(x => x.ArtistId == id);
@@ -35,17 +38,20 @@ namespace Business.Concrete
 			return new SuccessResult();
 		}
 
+		[SecuredOperation("admin,editor,user")]
 		public IDataResult<Artist> Get(int id)
 		{
 			return new SuccessDataResult<Artist>(_artistDal.Get(x => x.ArtistId == id));
 		}
 
+		[SecuredOperation("admin,editor")]
 		public IDataResult<List<Artist>> GetAll()
 		{
 			return new SuccessDataResult<List<Artist>>(_artistDal.GetAll());
 
 		}
 
+		[SecuredOperation("admin")]
 		[ValidationAspect(typeof(ArtistValidator))]
 		public IResult Update(Artist artist)
 		{
