@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Chinook-Backend\Core.csproj" />
+    <ProjectReference Include="..\Chinook-Backend\Core_.csproj" />
   </ItemGroup>
 
 </Project>

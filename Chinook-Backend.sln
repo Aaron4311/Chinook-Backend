@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Chinook-Backend\Core.csproj", "{29EFAED5-7CDD-4B42-8BEF-6F7A00FE5625}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core_", "Chinook-Backend\Core_.csproj", "{29EFAED5-7CDD-4B42-8BEF-6F7A00FE5625}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "Business\Business.csproj", "{BCF6C43E-0970-43D2-9717-C505C12A7B6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "Business\Business.csproj", "{BCF6C43E-0970-43D2-9717-C505C12A7B6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{B0EE11F2-0E92-4DC0-AB6A-FEA29CCBA090}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{B0EE11F2-0E92-4DC0-AB6A-FEA29CCBA090}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entity", "Entity\Entity.csproj", "{A2065B99-7226-4BC2-857A-ED120B8FFAF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entity", "Entity\Entity.csproj", "{A2065B99-7226-4BC2-857A-ED120B8FFAF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csproj", "{CBC4F20A-328C-430D-A41D-F7051A167738}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "WebAPI\WebAPI.csproj", "{CBC4F20A-328C-430D-A41D-F7051A167738}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
