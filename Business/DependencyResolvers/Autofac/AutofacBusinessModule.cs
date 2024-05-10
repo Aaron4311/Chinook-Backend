@@ -48,6 +48,12 @@ namespace Business.DependencyResolvers.Autofac
 			builder.RegisterType<TrackManager>().As<ITrackService>().SingleInstance();
 			builder.RegisterType<EfTrackDal>().As<ITrackDal>().SingleInstance();
 
+			builder.RegisterType<UserManager>().As<IUserService>().SingleInstance();
+			builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
+
+			builder.RegisterType<AuthManager>().As<IAuthService>().SingleInstance();
+
+
 			var assembly = Assembly.GetExecutingAssembly();
 			builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()
 				.EnableInterfaceInterceptors(new ProxyGenerationOptions()

@@ -1,4 +1,5 @@
-﻿using Chinook_Backend.Utilities.Results;
+﻿using Business.Abstract;
+using Chinook_Backend.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using Entity.Concrete;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
-	public class ArtistManager
+	public class ArtistManager : IArtistService
 	{
 		private IArtistDal _artistDal;
 

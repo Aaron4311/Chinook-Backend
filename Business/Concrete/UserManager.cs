@@ -1,7 +1,9 @@
-﻿using Business.Constants;
+﻿using Business.Abstract;
+using Business.Constants;
 using Chinook_Backend.Aspects.Validation;
 using Chinook_Backend.Entities.Concrete;
 using Chinook_Backend.Utilities.Results;
+using DataAccess.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
-	public class UserManager
+	public class UserManager : IUserService
 	{
 		IUserDal _userDal;
 

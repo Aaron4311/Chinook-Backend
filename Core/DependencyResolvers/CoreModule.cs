@@ -1,6 +1,7 @@
 ﻿using Chinook_Backend.CrossCuttingConcerns.Caching;
 using Chinook_Backend.CrossCuttingConcerns.Caching.Microsoft;
 using Chinook_Backend.Utilities.IoC;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace Chinook_Backend.DependencyResolvers
 		{
 			collection.AddMemoryCache();
 			collection.AddSingleton<ICacheManager, MemoryCacheManager>();
+			collection.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 			collection.AddSingleton<Stopwatch>();
 		}
 	}
