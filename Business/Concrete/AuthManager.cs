@@ -30,7 +30,7 @@ namespace Business.Concrete
 		{
 			var claims = _userService.GetClaims(user);
 			var accessToken = _tokenHelper.CreateToken(user, claims);
-			return new SuccessDataResult<AccessToken>(accessToken, Messages.AccessTokenCreated);
+			return new SuccessDataResult<AccessToken>(accessToken, Messages.accessTokenCreated);
 		}
 
 		[ValidationAspect(typeof(UserForLoginDtoValidator))]
@@ -39,14 +39,14 @@ namespace Business.Concrete
 			var userToCheck = _userService.GetByMail(userForLoginDto.Email);
 			if (userToCheck.Data == null)
 			{
-				return new ErrorDataResult<User>(Messages.UserNotFound);
+				return new ErrorDataResult<User>(Messages.userNotFound);
 			}
 
 			if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.Data.PasswordHash, userToCheck.Data.PasswordSalt))
 			{
-				return new ErrorDataResult<User>(Messages.UserNotFound);
+				return new ErrorDataResult<User>(Messages.userNotFound);
 			}
-			return new SuccessDataResult<User>(userToCheck.Data, Messages.LoginSuccessful);
+			return new SuccessDataResult<User>(userToCheck.Data, Messages.loginSuccessful);
 		}
 
 

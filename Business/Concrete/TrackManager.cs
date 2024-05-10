@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
 using Business.BusinessAspects.Autofac;
+using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Chinook_Backend.Aspects.Caching;
 using Chinook_Backend.Aspects.Validation;
 using Chinook_Backend.Utilities.Results;
 using DataAccess.Abstract;
@@ -24,30 +26,34 @@ namespace Business.Concrete
 
 		[ValidationAspect(typeof(TrackValidator))]
 		[SecuredOperation("admin,editor")]
+		[CacheRemovingAspect("ITrackService.Get")]
 		public IResult Add(Track track)
 		{
 			_trackDal.Add(track);
-			return new SuccessResult();
+			return new SuccessResult(Messages.trackAdded);
 		}
 
 		[SecuredOperation("admin")]
+		[CacheRemovingAspect("ITrackService.Get")]
 		public IResult Delete(int id)
 		{
 			var deletedTrack = _trackDal.Get(x => x.TrackId == id);
 			_trackDal.Delete(deletedTrack);
-			return new SuccessResult();
+			return new SuccessResult(Messages.trackDeleted);
 		}
 
 		[SecuredOperation("admin,editor,user")]
+		[CachingAspect]
 		public IDataResult<Track> Get(int id)
 		{
-			return new SuccessDataResult<Track>(_trackDal.Get(x => x.TrackId == id));
+			return new SuccessDataResult<Track>(_trackDal.Get(x => x.TrackId == id),Messages.trackListed);
 		}
 
 		[SecuredOperation("admin,editor")]
+		[CachingAspect]
 		public IDataResult<List<Track>> GetAll()
 		{
-			return new SuccessDataResult<List<Track>>(_trackDal.GetAll());
+			return new SuccessDataResult<List<Track>>(_trackDal.GetAll(), Messages.trackListed);
 
 		}
 
@@ -56,7 +62,7 @@ namespace Business.Concrete
 		public IResult Update(Track track)
 		{
 			_trackDal.Update(track);
-			return new SuccessResult();
+			return new SuccessResult(Messages.trackUpdated);
 		}
 	}
 }

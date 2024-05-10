@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.BusinessAspects.Autofac;
+using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Chinook_Backend.Aspects.Caching;
 using Chinook_Backend.Aspects.Validation;
@@ -24,34 +25,38 @@ namespace Business.Concrete
 		public IResult Add(Album album)
 		{
 			_albumDal.Add(album);
-			return new SuccessResult();
+			return new SuccessResult(Messages.albumAdded);
 		}
 
 		[SecuredOperation("admin")]
+		[CacheRemovingAspect("IAlbumService.Get")]
 		public IResult Delete(int id)
 		{
 			var deletedAlbum = _albumDal.Get(x => x.AlbumId == id);
 			_albumDal.Delete(deletedAlbum);
-			return new SuccessResult();
+			return new SuccessResult(Messages.albumDeleted);
 		}
 
 		[SecuredOperation("admin,editor,user")]
+		[CachingAspect]
 		public IDataResult<Album> Get(int id)
 		{
-			return new SuccessDataResult<Album>(_albumDal.Get(x => x.AlbumId == id));
+			return new SuccessDataResult<Album>(_albumDal.Get(x => x.AlbumId == id),Messages.albumListed);
 		}
 
 		[SecuredOperation("admin,editor,user")]
+		[CachingAspect(10)]
 		public IDataResult<List<AlbumDetailsDto>> GetAlbumDetails()
 		{
-			return new SuccessDataResult<List<AlbumDetailsDto>>(_albumDal.GetAlbumDetails());
+			return new SuccessDataResult<List<AlbumDetailsDto>>(_albumDal.GetAlbumDetails(),Messages.albumListed);
 		}
 
 
 		[SecuredOperation("admin,editor")]
+		[CachingAspect]
 		public IDataResult<List<Album>> GetAll()
 		{
-			return new SuccessDataResult<List<Album>>(_albumDal.GetAll());
+			return new SuccessDataResult<List<Album>>(_albumDal.GetAll(), Messages.albumListed);
 
 		}
 
@@ -60,7 +65,7 @@ namespace Business.Concrete
 		public IResult Update(Album album)
 		{
 			_albumDal.Update(album);
-			return new SuccessResult();
+			return new SuccessResult(Messages.albumUpdated);
 		}
 	}
 }

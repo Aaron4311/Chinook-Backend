@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
 using Business.BusinessAspects.Autofac;
+using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Chinook_Backend.Aspects.Caching;
 using Chinook_Backend.Aspects.Validation;
 using Chinook_Backend.Utilities.Results;
 using DataAccess.Abstract;
@@ -24,30 +26,34 @@ namespace Business.Concrete
 		}
 		[ValidationAspect(typeof(CustomerValidator))]
 		[SecuredOperation("admin,editor")]
+		[CacheRemovingAspect("ICustomerService.Get")]
 		public IResult Add(Customer customer)
 		{
 			_customerDal.Add(customer);
-			return new SuccessResult();
+			return new SuccessResult(Messages.customerAdded);
 		}
 
+		[CacheRemovingAspect("ICustomerService.Get")]
 		[SecuredOperation("admin")]
 		public IResult Delete(int id)
 		{
 			var deletedCustomer = _customerDal.Get(x => x.CustomerId == id);
 			_customerDal.Delete(deletedCustomer);
-			return new SuccessResult();
+			return new SuccessResult(Messages.customerDeleted);
 		}
 
 		[SecuredOperation("admin,editor,user")]
+		[CachingAspect]
 		public IDataResult<Customer> Get(int id)
 		{
-			return new SuccessDataResult<Customer>(_customerDal.Get(x => x.CustomerId == id));
+			return new SuccessDataResult<Customer>(_customerDal.Get(x => x.CustomerId == id), Messages.customerListed);
 		}
 
 		[SecuredOperation("admin,editor")]
+		[CachingAspect]
 		public IDataResult<List<Customer>> GetAll()
 		{
-			return new SuccessDataResult<List<Customer>>(_customerDal.GetAll());
+			return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(), Messages.customerListed);
 
 		}
 
@@ -56,7 +62,7 @@ namespace Business.Concrete
 		public IResult Update(Customer customer)
 		{
 			_customerDal.Update(customer);
-			return new SuccessResult();
+			return new SuccessResult(Messages.customerUpdated);
 		}
 	}
 }

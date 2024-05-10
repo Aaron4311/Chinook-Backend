@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
 using Business.BusinessAspects.Autofac;
+using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Chinook_Backend.Aspects.Caching;
 using Chinook_Backend.Aspects.Validation;
 using Chinook_Backend.Utilities.Results;
 using DataAccess.Abstract;
@@ -24,30 +26,34 @@ namespace Business.Concrete
 		}
 		[ValidationAspect(typeof(EmployeeValidator))]
 		[SecuredOperation("admin,editor")]
+		[CacheRemovingAspect("IEmployeeService.Get")]
 		public IResult Add(Employee employee)
 		{
 			_employeeDal.Add(employee);
-			return new SuccessResult();
+			return new SuccessResult(Messages.employeeAdded);
 		}
 
+		[CacheRemovingAspect("IEmployeeService.Get")]
 		[SecuredOperation("admin")]
 		public IResult Delete(int id)
 		{
 			var deletedEmployee = _employeeDal.Get(x => x.EmployeeId == id);
 			_employeeDal.Delete(deletedEmployee);
-			return new SuccessResult();
+			return new SuccessResult(Messages.employeeDeleted);
 		}
 
 		[SecuredOperation("admin,editor,user")]
+		[CachingAspect]
 		public IDataResult<Employee> Get(int id)
 		{
-			return new SuccessDataResult<Employee>(_employeeDal.Get(x => x.EmployeeId == id));
+			return new SuccessDataResult<Employee>(_employeeDal.Get(x => x.EmployeeId == id), Messages.employeeListed);
 		}
 
 		[SecuredOperation("admin,editor")]
+		[CachingAspect]
 		public IDataResult<List<Employee>> GetAll()
 		{
-			return new SuccessDataResult<List<Employee>>(_employeeDal.GetAll());
+			return new SuccessDataResult<List<Employee>>(_employeeDal.GetAll(), Messages.employeeListed);
 
 		}
 
@@ -56,7 +62,7 @@ namespace Business.Concrete
 		public IResult Update(Employee employee)
 		{
 			_employeeDal.Update(employee);
-			return new SuccessResult();
+			return new SuccessResult(Messages.employeeUpdated);
 		}
 	}
 }

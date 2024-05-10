@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
 using Business.BusinessAspects.Autofac;
+using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Chinook_Backend.Aspects.Caching;
 using Chinook_Backend.Aspects.Validation;
 using Chinook_Backend.Utilities.Results;
 using DataAccess.Abstract;
@@ -23,31 +25,35 @@ namespace Business.Concrete
 			_artistDal = artistDal;
 		}
 		[ValidationAspect(typeof(ArtistValidator))]
+		[CacheRemovingAspect("IArtistService.Get")]
 		[SecuredOperation("admin,editor")]
 		public IResult Add(Artist artist)
 		{
 			_artistDal.Add(artist);
-			return new SuccessResult();
+			return new SuccessResult(Messages.artistAdded);
 		}
 
+		[CacheRemovingAspect("IArtistService.Get")]
 		[SecuredOperation("admin")]
 		public IResult Delete(int id)
 		{
 			var deletedArtist = _artistDal.Get(x => x.ArtistId == id);
 			_artistDal.Delete(deletedArtist);
-			return new SuccessResult();
+			return new SuccessResult(Messages.artistDeleted);
 		}
 
 		[SecuredOperation("admin,editor,user")]
+		[CachingAspect]
 		public IDataResult<Artist> Get(int id)
 		{
-			return new SuccessDataResult<Artist>(_artistDal.Get(x => x.ArtistId == id));
+			return new SuccessDataResult<Artist>(_artistDal.Get(x => x.ArtistId == id), Messages.artistListed);
 		}
 
 		[SecuredOperation("admin,editor")]
+		[CachingAspect]
 		public IDataResult<List<Artist>> GetAll()
 		{
-			return new SuccessDataResult<List<Artist>>(_artistDal.GetAll());
+			return new SuccessDataResult<List<Artist>>(_artistDal.GetAll(), Messages.artistListed);
 
 		}
 
@@ -56,7 +62,7 @@ namespace Business.Concrete
 		public IResult Update(Artist artist)
 		{
 			_artistDal.Update(artist);
-			return new SuccessResult();
+			return new SuccessResult(Messages.artistUpdated);
 		}
 	}
 }

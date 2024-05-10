@@ -1,6 +1,8 @@
 ﻿using Business.Abstract;
 using Business.BusinessAspects.Autofac;
+using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Chinook_Backend.Aspects.Caching;
 using Chinook_Backend.Aspects.Validation;
 using Chinook_Backend.Utilities.Results;
 using DataAccess.Abstract;
@@ -25,30 +27,34 @@ namespace Business.Concrete
 
 		[ValidationAspect(typeof(PlaylistValidator))]
 		[SecuredOperation("admin,editor")]
+		[CacheRemovingAspect("IPlaylistService.Get")]
 		public IResult Add(Playlist playlist)
 		{
 			_playlistDal.Add(playlist);
-			return new SuccessResult();
+			return new SuccessResult(Messages.playlistAdded);
 		}
 
 		[SecuredOperation("admin")]
+		[CacheRemovingAspect("IPlaylistService.Get")]
 		public IResult Delete(int id)
 		{
 			var deletedPlaylist = _playlistDal.Get(x => x.PlaylistId == id);
 			_playlistDal.Delete(deletedPlaylist);
-			return new SuccessResult();
+			return new SuccessResult(Messages.playlistDeleted);
 		}
 
 		[SecuredOperation("admin,editor,user")]
+		[CachingAspect]
 		public IDataResult<Playlist > Get(int id)
 		{
-			return new SuccessDataResult<Playlist >(_playlistDal.Get(x => x.PlaylistId == id));
+			return new SuccessDataResult<Playlist >(_playlistDal.Get(x => x.PlaylistId == id), Messages.playlistListed);
 		}
 
 		[SecuredOperation("admin,editor")]
+		[CachingAspect]
 		public IDataResult<List<Playlist >> GetAll()
 		{
-			return new SuccessDataResult<List<Playlist >>(_playlistDal.GetAll());
+			return new SuccessDataResult<List<Playlist >>(_playlistDal.GetAll(), Messages.playlistListed);
 
 		}
 
@@ -57,7 +63,7 @@ namespace Business.Concrete
 		public IResult Update(Playlist playlist)
 		{
 			_playlistDal.Update(playlist);
-			return new SuccessResult();
+			return new SuccessResult(Messages.playlistUpdated);
 		}
 	}
 }
