@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
+using Chinook_Backend.Aspects.Validation;
 using Chinook_Backend.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
@@ -19,6 +21,7 @@ namespace Business.Concrete
 		{
 			_artistDal = artistDal;
 		}
+		[ValidationAspect(typeof(ArtistValidator))]
 		public IResult Add(Artist artist)
 		{
 			_artistDal.Add(artist);
@@ -43,6 +46,7 @@ namespace Business.Concrete
 
 		}
 
+		[ValidationAspect(typeof(ArtistValidator))]
 		public IResult Update(Artist artist)
 		{
 			_artistDal.Update(artist);

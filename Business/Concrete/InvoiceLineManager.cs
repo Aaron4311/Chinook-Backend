@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
+using Chinook_Backend.Aspects.Validation;
 using Chinook_Backend.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
@@ -19,6 +21,8 @@ namespace Business.Concrete
 		{
 			_invoiceLineDal = invoiceLineDal;
 		}
+
+		[ValidationAspect(typeof(InvoiceLineValidator))]
 		public IResult Add(InvoiceLine invoice)
 		{
 			_invoiceLineDal.Add(invoice);

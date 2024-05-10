@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
+using Chinook_Backend.Aspects.Validation;
 using Chinook_Backend.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
@@ -19,6 +21,9 @@ namespace Business.Concrete
 		{
 			_mediaTypeDal = mediaTypeDal;
 		}
+
+		[ValidationAspect(typeof(MediaTypeValidator))]
+
 		public IResult Add(MediaType mediaType)
 		{
 			_mediaTypeDal.Add(mediaType);
@@ -43,6 +48,7 @@ namespace Business.Concrete
 
 		}
 
+		[ValidationAspect(typeof(MediaTypeValidator))]
 		public IResult Update(MediaType mediaType)
 		{
 			_mediaTypeDal.Update(mediaType);

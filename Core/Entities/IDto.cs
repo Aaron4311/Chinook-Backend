@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Chinook_Backend.Entities
 {
-	internal interface IDto
+	public interface IDto
 	{
 	}
 }

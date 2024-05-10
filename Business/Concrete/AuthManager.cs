@@ -5,6 +5,7 @@ using Chinook_Backend.Entities.Concrete;
 using Chinook_Backend.Utilities.Results;
 using Chinook_Backend.Utilities.Security.Hashing;
 using Chinook_Backend.Utilities.Security.JWT;
+using DevFramework.Northwind.Business.ValidationRules.FluentValidation;
 using Entity.Dtos;
 using System;
 using System.Collections.Generic;
@@ -32,7 +33,7 @@ namespace Business.Concrete
 			return new SuccessDataResult<AccessToken>(accessToken, Messages.AccessTokenCreated);
 		}
 
-		
+		[ValidationAspect(typeof(UserForLoginDtoValidator))]
 		public IDataResult<User> Login(UserForLoginDto userForLoginDto)
 		{
 			var userToCheck = _userService.GetByMail(userForLoginDto.Email);
@@ -49,6 +50,7 @@ namespace Business.Concrete
 		}
 
 
+		[ValidationAspect(typeof(UserForRegisterDtoValidator))]
 		public IDataResult<User> Register(UserForRegisterDto userForRegisterDto, string password)
 		{
 			byte[] passwordHash, passwordSalt;

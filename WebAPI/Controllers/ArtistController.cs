@@ -7,29 +7,29 @@ namespace WebAPI.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class AlbumController : ControllerBase
+	public class ArtistController : ControllerBase
 	{
-		private IAlbumService _albumService;
+		private IArtistService _artistService;
 
-		public AlbumController(IAlbumService albumService)
+		public ArtistController(IArtistService artistService)
 		{
-			_albumService = albumService;
+			_artistService = artistService;
 		}
 
 		[HttpGet("GetAll")]
 		public IActionResult GetAll()
 		{
-			var result = _albumService.GetAll();
+			var result = _artistService.GetAll();
 			if (!result.Success)
 			{
 				return BadRequest(result.Message);
 			}
-			return Ok(result.Data);	
+			return Ok(result.Data);
 		}
-		[HttpGet("GetAlbum")]
+		[HttpGet("GetArtist")]
 		public IActionResult Get(int id)
 		{
-			var result = _albumService.Get(id);
+			var result = _artistService.Get(id);
 			if (!result.Success)
 			{
 				return BadRequest(result.Message);
@@ -37,47 +37,37 @@ namespace WebAPI.Controllers
 			return Ok(result.Data);
 		}
 
-		[HttpGet("GetDetails")]
-		public IActionResult GetAlbumDetails()
-		{
-			var result = _albumService.GetAlbumDetails();
-			if (!result.Success)
-			{
-				return BadRequest(result.Message);
-			}
-			return Ok(result.Data);
-		}
+		
 
-		[HttpPost("AddAlbum")]
-		public IActionResult Add(Album album)
+		[HttpPost("AddArtist")]
+		public IActionResult Add(Artist artist)
 		{
-			var result = _albumService.Add(album);
+			var result = _artistService.Add(artist);
 			if (!result.Success)
 			{
 				return BadRequest(result.Message);
 			}
 			return Ok(result.Message);
 		}
-		[HttpPut("UpdateAlbum")]
-		public IActionResult Update(Album album)
+		[HttpPut("UpdateArtist")]
+		public IActionResult Update(Artist artist)
 		{
-			var result = _albumService.Update(album);
+			var result = _artistService.Update(artist);
 			if (!result.Success)
 			{
 				return BadRequest(result.Message);
 			}
 			return Ok(result.Message);
 		}
-		[HttpDelete("DeleteAlbum")]
+		[HttpDelete("DeleteArtist")]
 		public IActionResult Delete(int id)
 		{
-			var result = _albumService.Delete(id);
+			var result = _artistService.Delete(id);
 			if (!result.Success)
 			{
 				return BadRequest(result.Message);
 			}
 			return Ok(result.Message);
 		}
-
 	}
 }

@@ -8,6 +8,7 @@ using System.Reflection;
 using Castle.DynamicProxy;
 using Module = Autofac.Module;
 using Chinook_Backend.Utilities.Interceptors;
+using Chinook_Backend.Utilities.Security.JWT;
 
 namespace Business.DependencyResolvers.Autofac
 {
@@ -52,6 +53,8 @@ namespace Business.DependencyResolvers.Autofac
 			builder.RegisterType<EfUserDal>().As<IUserDal>().SingleInstance();
 
 			builder.RegisterType<AuthManager>().As<IAuthService>().SingleInstance();
+
+			builder.RegisterType<JwtHelper>().As<ITokenHelper>().SingleInstance();
 
 
 			var assembly = Assembly.GetExecutingAssembly();

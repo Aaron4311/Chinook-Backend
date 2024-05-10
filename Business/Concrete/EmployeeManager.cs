@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
+using Chinook_Backend.Aspects.Validation;
 using Chinook_Backend.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
@@ -19,6 +21,7 @@ namespace Business.Concrete
 		{
 			_employeeDal = employeeDal;
 		}
+		[ValidationAspect(typeof(EmployeeValidator))]
 		public IResult Add(Employee employee)
 		{
 			_employeeDal.Add(employee);
@@ -43,6 +46,7 @@ namespace Business.Concrete
 
 		}
 
+		[ValidationAspect(typeof(EmployeeValidator))]
 		public IResult Update(Employee employee)
 		{
 			_employeeDal.Update(employee);

@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
+using Chinook_Backend.Aspects.Validation;
 using Chinook_Backend.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
@@ -19,6 +21,7 @@ namespace Business.Concrete
 		{
 			_playlistTrackDal = playlistTrackDal;
 		}
+		[ValidationAspect(typeof(PlaylistTrackManager))]
 		public IResult Add(PlaylistTrack playlistTrack)
 		{
 			_playlistTrackDal.Add(playlistTrack );
@@ -43,6 +46,7 @@ namespace Business.Concrete
 
 		}
 
+		[ValidationAspect(typeof(PlaylistTrackManager))]
 		public IResult Update(PlaylistTrack playlistTrack)
 		{
 			_playlistTrackDal.Update(playlistTrack);

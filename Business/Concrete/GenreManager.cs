@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
+using Chinook_Backend.Aspects.Validation;
 using Chinook_Backend.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
@@ -19,6 +21,7 @@ namespace Business.Concrete
 		{
 			_genreDal = genreDal;
 		}
+		[ValidationAspect(typeof(GenreValidator))]
 		public IResult Add(Genre genre)
 		{
 			_genreDal.Add(genre);
@@ -42,7 +45,8 @@ namespace Business.Concrete
 			return new SuccessDataResult<List<Genre>>(_genreDal.GetAll());
 
 		}
-
+		
+		[ValidationAspect(typeof(GenreValidator))]
 		public IResult Update(Genre genre)
 		{
 			_genreDal.Update(genre);
