@@ -35,7 +35,7 @@ namespace Business.DependencyResolvers.Autofac
 			builder.RegisterType<EfInvoiceDal>().As<IInvoiceDal>().SingleInstance();
 
 			builder.RegisterType<InvoiceLineManager>().As<IInvoiceLineService>().SingleInstance();
-			builder.RegisterType<EfInvoiceDal>().As<IInvoiceDal>().SingleInstance();
+			builder.RegisterType<EfInvoiceLineDal>().As<IInvoiceLineDal>().SingleInstance();
 
 			builder.RegisterType<MediaTypeManager>().As<IMediaTypeService>().SingleInstance();
 			builder.RegisterType<EfMediaTypeDal>().As<IMediaTypeDal>().SingleInstance();

@@ -1,11 +1,11 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
 using Chinook_Backend.Aspects.Validation;
 using Chinook_Backend.Entities.Concrete;
 using Chinook_Backend.Utilities.Results;
 using Chinook_Backend.Utilities.Security.Hashing;
 using Chinook_Backend.Utilities.Security.JWT;
-using DevFramework.Northwind.Business.ValidationRules.FluentValidation;
 using Entity.Dtos;
 using System;
 using System.Collections.Generic;
@@ -65,14 +65,14 @@ namespace Business.Concrete
 				Status = true
 			};
 			_userService.Add(user);
-			return new SuccessDataResult<User>(user, Messages.UserRegistered);
+			return new SuccessDataResult<User>(user, Messages.userRegistered);
 		}
 
 		public IResult UserExists(string email)
 		{
 			if (_userService.GetByMail(email).Data != null)
 			{
-				return new ErrorResult(Messages.UserExists);
+				return new ErrorResult(Messages.userExists);
 			}
 			return new SuccessResult();
 		}

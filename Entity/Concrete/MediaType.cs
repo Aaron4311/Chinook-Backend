@@ -10,6 +10,6 @@ namespace Entity.Concrete
 		public int MediaTypeId { get; set; }
 
 		
-		public string Name { get; set; }
+		public string? Name { get; set; }
 	}
 }

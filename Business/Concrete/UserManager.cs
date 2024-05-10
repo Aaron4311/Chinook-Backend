@@ -1,12 +1,12 @@
 ﻿using Business.Abstract;
 using Business.BusinessAspects.Autofac;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
 using Chinook_Backend.Aspects.Caching;
 using Chinook_Backend.Aspects.Validation;
 using Chinook_Backend.Entities.Concrete;
 using Chinook_Backend.Utilities.Results;
 using DataAccess.Abstract;
-using DevFramework.Northwind.Business.ValidationRules.FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +29,7 @@ namespace Business.Concrete
 		public IResult Add(User user)
 		{
 			_userDal.Add(user);
-			return new SuccessResult(Messages.UserAdded);
+			return new SuccessResult(Messages.userAdded);
 		}
 
 		public IDataResult<User> GetByMail(string mail)

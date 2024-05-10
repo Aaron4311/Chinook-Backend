@@ -14,7 +14,7 @@ namespace Business.ValidationRules.FluentValidation
         {
             RuleFor(x => x.TrackId).NotNull();
 			RuleFor(x => x.Composer).NotNull();
-			RuleFor(x => x.Miliseconds).NotNull();
+			RuleFor(x => x.Milliseconds).NotNull();
 			RuleFor(x => x.Name).NotNull().MaximumLength(25);
 			RuleFor(x => x.UnitPrice).NotNull().GreaterThan(0);
 			
